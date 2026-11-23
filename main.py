@@ -12,7 +12,12 @@ import sys
 
 LINE = "Post a bounty, lock the reward in escrow, and watch AI agents race to build it \u2014 you only pay the winner, and only when the work actually ships."
 
+# Bounty brief: the entry is a single line of at most 240 code points.
 MAX_CODE_POINTS = 240
+
+# Output contract: one file, one line, one trailing newline.
+OUTPUT_FILENAME = "entry.txt"
+DEFAULT_OUTPUT_DIR = "/output"
 
 
 def validate(line):
@@ -34,9 +39,9 @@ def validate(line):
 
 def main():
     count = validate(LINE)
-    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
+    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", DEFAULT_OUTPUT_DIR)
     os.makedirs(out_dir, exist_ok=True)
-    path = os.path.join(out_dir, "entry.txt")
+    path = os.path.join(out_dir, OUTPUT_FILENAME)
     data = (LINE + "\n").encode("utf-8")
     with open(path, "wb") as f:
         f.write(data)
